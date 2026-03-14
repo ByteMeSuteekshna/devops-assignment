@@ -17,11 +17,11 @@ pipeline {
         stage('Deploy to AWS') {
             steps {
                 sh '''
-                    scp -i /home/ubuntu/.ssh/devops-key.pem \
+                    scp -i /var/lib/jenkins/.ssh/devops-key.pem \
                         -o StrictHostKeyChecking=no \
                         index-aws.html \
                         ubuntu@${AWS_IP}:/var/www/html/index.html
-                    ssh -i /home/ubuntu/.ssh/devops-key.pem \
+                    ssh -i /var/lib/jenkins/.ssh/devops-key.pem \
                         -o StrictHostKeyChecking=no \
                         ubuntu@${AWS_IP} "sudo systemctl restart nginx"
                 '''
@@ -31,11 +31,11 @@ pipeline {
         stage('Deploy to Azure') {
             steps {
                 sh '''
-                    scp -i /home/ubuntu/.ssh/devops-azure-key.pem \
+                    scp -i /var/lib/jenkins/.ssh/devops-azure-key.pem \
                         -o StrictHostKeyChecking=no \
                         index-azure.html \
                         azureuser@${AZURE_IP}:/var/www/html/index.html
-                    ssh -i /home/ubuntu/.ssh/devops-azure-key.pem \
+                    ssh -i /var/lib/jenkins/.ssh/devops-azure-key.pem \
                         -o StrictHostKeyChecking=no \
                         azureuser@${AZURE_IP} "sudo systemctl restart nginx"
                 '''
